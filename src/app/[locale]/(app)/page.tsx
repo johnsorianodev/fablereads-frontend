@@ -12,7 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import { client } from "@/utils/amplify";
 
 type Props = {
-  children: React.ReactNode;
   params: Promise<{ locale: string }>;
 };
 

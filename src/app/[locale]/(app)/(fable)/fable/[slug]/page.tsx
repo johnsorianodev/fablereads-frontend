@@ -10,15 +10,8 @@ import { Metadata } from "next";
 import Button from "@/components/ui/button";
 import {
   PayloadLexicalReactRenderer,
-  PayloadLexicalReactRendererProps,
-  PayloadLexicalReactRendererContent,
   defaultElementRenderers,
 } from "@atelier-disko/payload-lexical-react-renderer";
-
-type Props = {
-  children: React.ReactNode;
-  params: Promise<{ slug: string; locale: string }>;
-};
 
 export const dynamicParams = true;
 
@@ -34,9 +27,13 @@ export async function generateStaticParams() {
   return fables.map((fable) => ({ slug: fable.slug }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug, locale } = await params;
-  const fable = await getFable(slug, locale);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const fable = await getFable(slug, "en");
 
   if (!fable) {
     return {
@@ -55,9 +52,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function FablePage({ params }: Props) {
-  const { slug, locale } = await params;
-  const fable = await getFable(slug, locale);
+export default async function FablePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const fable = await getFable(slug, "en");
   // setRequestLocale(LOCALE.EN);
   // const t = useTranslations("FablePage");
 
