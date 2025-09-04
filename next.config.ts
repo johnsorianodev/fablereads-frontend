@@ -2,6 +2,7 @@ import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   images: {
     remotePatterns: [
       {
@@ -9,13 +10,6 @@ const nextConfig: NextConfig = {
         hostname: "d2ernfhqd0mjj5.cloudfront.net",
         port: "",
         pathname: "/**",
-      },
-      // You can add more domains here as needed
-      {
-        protocol: "https",
-        hostname: "images.pexels.com",
-        port: "",
-        pathname: "/photos/**",
       },
     ],
   },
