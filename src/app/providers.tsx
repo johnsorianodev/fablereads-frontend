@@ -1,8 +1,8 @@
 // app/providers.tsx
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a new QueryClient instance for each request on the server
 // and a singleton instance on the client.

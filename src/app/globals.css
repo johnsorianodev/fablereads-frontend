@@ -1,5 +1,5 @@
 @import "tailwindcss";
- @plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/typography';
 
 :root {
   --background: #ffffff;
@@ -8,8 +8,8 @@
 
 @theme {
   /* Define custom colors */
-  --color-primary: #F6921E;
-  --color-secondary: #F6921E;
+  --color-primary: #f6921e;
+  --color-secondary: #f6921e;
 
   /* Define custom spacing */
   --spacing-xl: 4rem;

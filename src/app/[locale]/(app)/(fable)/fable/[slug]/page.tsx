@@ -1,9 +1,3 @@
-import { use } from "react";
-import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { LOCALE } from "../../../../../../constants";
-import { generateClient } from "aws-amplify/data";
 import { client } from "@/utils/amplify";
 import { getFable } from "@/utils/api";
 import { Metadata } from "next";
@@ -20,7 +14,7 @@ export async function generateStaticParams() {
     authMode: "apiKey",
     filter: {
       locale: {
-        eq: LOCALE.EN,
+        eq: "en",
       },
     },
   });
@@ -59,8 +53,6 @@ export default async function FablePage({
 }) {
   const { slug } = await params;
   const fable = await getFable(slug, "en");
-  // setRequestLocale(LOCALE.EN);
-  // const t = useTranslations("FablePage");
 
   return (
     <main className="pt-[150px]">
