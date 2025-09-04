@@ -1,7 +1,7 @@
 # Dockerfile for Next.js application
 
 # Stage 1: Dependencies
-FROM node:18-alpine AS deps
+FROM node:22.17.0-alpine AS deps
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # Stage 2: Builder
-FROM node:18-alpine AS builder
+FROM node:22.17.0-alpine AS builder
 
 WORKDIR /app
 
@@ -29,9 +29,17 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN pnpm run build
 
 # Stage 3: Runner
-FROM node:18-alpine AS runner
+FROM node:22.17.0-alpine AS runner
 
 WORKDIR /app
+
+# Build arguments
+ARG NEXT_PUBLIC_CDN_URL
+ARG NEXT_PUBLIC_HEADLESS_URL
+
+# Set environment variables
+ENV NEXT_PUBLIC_CDN_URL=$NEXT_PUBLIC_CDN_URL
+ENV NEXT_PUBLIC_HEADLESS_URL=$NEXT_PUBLIC_HEADLESS_URL
 
 # Copy built assets from the builder stage
 COPY --from=builder /app/.next ./.next
