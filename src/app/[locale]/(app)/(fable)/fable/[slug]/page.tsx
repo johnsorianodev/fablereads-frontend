@@ -9,18 +9,6 @@ import {
 
 export const dynamicParams = true;
 
-export async function generateStaticParams({ params: { locale } }: { params: { locale: string } }) {
-  const { data: fables } = await client.models.Fable.list({
-    authMode: "apiKey",
-    filter: {
-      locale: {
-        eq: locale,
-      },
-    },
-  });
-  return fables.map((fable) => ({ slug: fable.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: {
