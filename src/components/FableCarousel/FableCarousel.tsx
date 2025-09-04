@@ -48,9 +48,6 @@ export const FableCarousel: React.FC<FableCarouselProps> = ({ title }) => {
       }))
     : [];
 
-  console.log(isLoading);
-  console.log(popularFables);
-
   const router = useRouter();
   // State to hold the calculated drag constraint
   const [width, setWidth] = useState(0);

@@ -10,7 +10,6 @@ export const routing = defineRouting({
     "fr",
     "hi",
     "pt",
-    "pt",
     "ru",
     "sv",
     "tl",

@@ -9,12 +9,12 @@ import {
 
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
+export async function generateStaticParams({ params: { locale } }: { params: { locale: string } }) {
   const { data: fables } = await client.models.Fable.list({
     authMode: "apiKey",
     filter: {
       locale: {
-        eq: "en",
+        eq: locale,
       },
     },
   });
@@ -24,10 +24,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const fable = await getFable(slug, "en");
+  const { slug, locale } = await params;
+  const fable = await getFable(slug, locale);
 
   if (!fable) {
     return {
@@ -49,10 +49,10 @@ export async function generateMetadata({
 export default async function FablePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }) {
-  const { slug } = await params;
-  const fable = await getFable(slug, "en");
+  const { slug, locale } = await params;
+  const fable = await getFable(slug, locale);
 
   return (
     <main className="pt-[150px]">
