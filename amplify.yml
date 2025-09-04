@@ -12,7 +12,9 @@ frontend:
   phases:
     build:
       commands:
-        - echo "No frontend to build"
+        - mkdir -p .next
+        - echo "{}" > .next/required-server-files.json
   artifacts:
-    baseDirectory: /
-    files: []
+    baseDirectory: .next
+    files:
+      - required-server-files.json
