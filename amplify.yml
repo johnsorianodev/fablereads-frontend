@@ -13,3 +13,6 @@ frontend:
     build:
       commands:
         - echo "No frontend to build"
+  artifacts:
+    baseDirectory: /
+    files: []
