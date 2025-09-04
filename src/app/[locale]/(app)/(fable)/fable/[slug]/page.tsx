@@ -3,46 +3,107 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { LOCALE } from "../../../../../../constants";
+import { generateClient } from "aws-amplify/data";
+import { client } from "@/utils/amplify";
+import { getFable } from "@/utils/api";
+import { Metadata } from "next";
+import Button from "@/components/ui/button";
+import {
+  PayloadLexicalReactRenderer,
+  PayloadLexicalReactRendererProps,
+  PayloadLexicalReactRendererContent,
+  defaultElementRenderers,
+} from "@atelier-disko/payload-lexical-react-renderer";
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 };
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  const fables = await fetch(
-    `${process.env.NEXT_PUBLIC_HEADLESS_URL}/api/fables?limit=5`,
-  );
-  const response = await fables.json();
-  console.log("Response: ", JSON.stringify(response));
-  const items = (response.docs || []).map((fable: { slug: string }) => ({
-    slug: fable.slug,
-  }));
-  console.log("Server: ", JSON.stringify(items));
-  return items;
+  const { data: fables } = await client.models.Fable.list({
+    authMode: "apiKey",
+    filter: {
+      locale: {
+        eq: LOCALE.EN,
+      },
+    },
+  });
+  return fables.map((fable) => ({ slug: fable.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const fable = await getFable(slug, locale);
+
+  if (!fable) {
+    return {
+      title: "Fable Not Found",
+    };
+  }
+
+  return {
+    title: fable.title,
+    description: fable.excerpt,
+    openGraph: {
+      title: fable.title,
+      description: fable.excerpt,
+      images: [fable.heroImage.sizes.og.url],
+    },
+  };
 }
 
 export default async function FablePage({ params }: Props) {
-  const values = await params;
+  const { slug, locale } = await params;
+  const fable = await getFable(slug, locale);
   // setRequestLocale(LOCALE.EN);
   // const t = useTranslations("FablePage");
 
-  console.log("Frontend: ", JSON.stringify(values));
-
   return (
-    <main>
-      <section>
+    <main className="pt-[150px]">
+      <section className="mx-auto md:max-w-3xl px-4">
         <div>
-          {/* content header */}
-          <h2>Author</h2>
-          <div>
-            <h1>Title</h1>
-            <p>Excerpt</p>
+          <div className="space-y-1">
+            <div>
+              <h2 className="text-primary font-semibold">
+                {fable.author.name} | {fable.origin.name}
+              </h2>
+              <h1 className="text-3xl font-bold">{fable.title}</h1>
+            </div>
+            <p className="italic text-[18px] font-serif">{fable.excerpt}</p>
+            <div className="space-x-3 py-4">
+              {fable.topics.map((topic) => (
+                <Button
+                  key={topic.id}
+                  className="bg-gray-500 text-xs font-bold px-2 py-1.5 rounded-md"
+                >
+                  {topic.name}
+                </Button>
+              ))}
+            </div>
           </div>
-          <div>Tag topics {values.slug}</div>
+          <div
+            style={
+              {
+                "--image-url": `url(${fable.vintageImage.sizes.square.url})`,
+              } as React.CSSProperties
+            }
+            className="bg-[image:var(--image-url)] bg-cover bg-center aspect-square rounded-md cursor-pointer object-cover"
+          />
         </div>
-        <div>{/* Banner Image */}</div>
-        <div>{/* Content */}</div>
+        <PayloadLexicalReactRenderer
+          content={fable.content}
+          elementRenderers={{
+            ...defaultElementRenderers,
+            paragraph: (props) => (
+              <p className="prose prose-xl font-medium text-white font-serif py-4">
+                {props.children}
+              </p>
+            ),
+          }}
+        />
         <div>{/* Feedback and Share */}</div>
         <div>{/* Relevance Content, use h3 in title of accordion */}</div>
       </section>

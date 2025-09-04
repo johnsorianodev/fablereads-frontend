@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import Logo from "../logo";
 import Button from "../ui/button";
@@ -11,6 +10,7 @@ import GlobeIcon from "../ui/icons/GlobeIcon";
 import BurgerIcon from "../ui/icons/BurgerIcon";
 import CogsIcon from "../ui/icons/CogsIcon";
 import XIcon from "../ui/icons/XIcon";
+import { Link } from "@/i18n/navigation";
 
 export type HeaderProps = {
   name?: boolean;
@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = (): React.ReactElement => {
         aria-label="Global"
         className="mx-auto flex container items-center justify-between p-4 lg:px-8"
       >
-        <Link href="#">
+        <Link href="/">
           <span className="sr-only">FableReads</span>
           <Logo />
         </Link>
@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = (): React.ReactElement => {
         <div className="fixed inset-0 z-50" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-screen h-screen overflow-y-auto bg-[#16181f] p-6">
           <div className="flex items-center justify-between">
-            <Link href="#">
+            <Link href="/">
               <span className="sr-only">FableReads</span>
               <Logo />
             </Link>

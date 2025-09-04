@@ -5,4 +5,5 @@ export const LOGO_URL = `${
 export const LOCALE = {
   EN: "en",
   SV: "sv",
+  DE: "de",
 } as const;

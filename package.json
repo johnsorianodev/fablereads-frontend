@@ -7,28 +7,43 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "sandbox": "npx ampx sandbox"
   },
   "dependencies": {
+    "@atelier-disko/payload-lexical-react-renderer": "^1.2.0",
+    "@aws-amplify/adapter-nextjs": "^1.6.8",
     "@headlessui/react": "^2.2.7",
+    "@tanstack/react-query": "^5.85.9",
+    "aws-amplify": "^6.15.5",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",
     "next": "15.5.2",
     "next-intl": "^4.3.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.16.1",
+    "@aws-amplify/backend-cli": "^1.8.0",
+    "@aws-amplify/seed": "^1.0.1",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "aws-cdk-lib": "2.204.0",
+    "constructs": "^10.4.2",
+    "esbuild": "^0.25.9",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.20.5",
+    "typescript": "^5.0.0"
   }
 }

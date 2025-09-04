@@ -8,6 +8,8 @@ import FableCarousel, { FableItem } from "../../../components/FableCarousel";
 import { fables as popularFables } from "../../../components/FableCarousel/data";
 import CallToAction from "../../../components/CallToAction";
 import FableQuotes from "../../../components/FableQuotes";
+import { useQuery } from "@tanstack/react-query";
+import { client } from "@/utils/amplify";
 
 type Props = {
   children: React.ReactNode;
@@ -24,12 +26,9 @@ export default function HomePage({ params }: Props) {
     <main>
       <Hero />
       <div className="-mt-10">
-        <FableCarousel title="Popular Fables" items={popularFables} />
+        <FableCarousel title="Popular Fables" />
       </div>
-      <FableCarousel
-        title="New on FableReads"
-        items={popularFables.reverse()}
-      />
+      <FableCarousel title="New on FableReads" />
       <FableQuotes />
       <CallToAction />
     </main>
